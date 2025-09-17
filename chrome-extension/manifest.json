@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "ChatGPT Beep",
+  "version": "1.0.0",
+  "description": "Beep on ChatGPT start/finish. https://github.com/MichaelZelensky/chat-gpt-beeps",
+  "permissions": [],
+  "host_permissions": ["https://chat.openai.com/*"],
+  "content_scripts": [
+    {
+      "matches": ["https://chat.openai.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

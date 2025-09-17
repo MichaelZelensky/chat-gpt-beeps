@@ -85,6 +85,7 @@ Repo layout:
 * **No sound?** Click once in the page (autoplay).
 * **Only one beep?** Wait for the double-beep at finish; large answers may take longer.
 * **Console verification:** open DevTools; snippet prints `START/DONE` logs.
+* **Reinstall** unistall and reinstall the extension. 
 
 ---
 

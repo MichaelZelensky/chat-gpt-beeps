@@ -1,10 +1,15 @@
 # ChatGPT beeps JS snippet
 
-Makes ChatGPT web-ui beep when streaming is started and finished.
+Makes ChatGPT web-ui beep when streaming is **started** and **finished**.
 
 ## Usage
 
-- Copy devtools-console-snippet.js code into buffer (Ctrl/⌘ + C)
-- Open browser devtools console. `Browser menu -> More Tools -> Developer Tools`. Note, that Ctrl/⌘ + Shift + V keyboard shortcut is reassigned on ChatGPT web-ui and won't open the Devtools, so please use the menu.
-- Paste into the console (Ctrl/⌘ + V), hit Enter
-- The browser should play the sound when chatgpt starts and finishes answering.
+1. Copy the `devtools-console-snippet.js` code below into your clipboard (`Ctrl/⌘ + C`).
+2. Open browser DevTools console:
+
+   * In Chrome/Edge: `Menu → More Tools → Developer Tools`
+   * In Firefox: `Menu → Web Developer → Web Console`
+
+   > Note: `Ctrl/⌘ + Shift + V` is reassigned inside ChatGPT web-ui, so **use the menu** to open DevTools.
+3. Paste the code (`Ctrl/⌘ + V`) into the console and press Enter.
+4. From now on, your browser will play a **short beep** when ChatGPT starts streaming a reply, and a **double beep** when it finishes.

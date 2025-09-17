@@ -16,9 +16,9 @@ cd chat-gpt-beeps
 
 Repo layout:
 
-* `devtools-console-snippet.js`
-* `extension/manifest.json` (MV3), `extension/content.js`
-* `extension-firefox/manifest.json` (MV3 + gecko), `extension-firefox/content.js` (same logic)
+* One-off code snippet: `devtools-console-snippet.js`
+* Chrome extension: `chrome-extension/` (MV3)
+* Firefox extension: `firefox-extension/` (MV3 + gecko)
 
 ---
 

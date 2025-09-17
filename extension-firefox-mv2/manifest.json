@@ -1,0 +1,20 @@
+{
+  "manifest_version": 2,
+  "name": "ChatGPT Beep (Firefox MV2)",
+  "version": "1.0.0",
+  "description": "Beep on ChatGPT start/finish. https://github.com/MichaelZelensky/chat-gpt-beeps",
+  "applications": {
+    "gecko": {
+      "id": "chatgpt-beep@local",
+      "strict_min_version": "91.0"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://chat.openai.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": []
+}

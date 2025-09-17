@@ -1,0 +1,57 @@
+(() => {
+  // Beeps when streaming starts (text length begins increasing) and when it stops (stable for ~900ms)
+  const ctx = new (window.AudioContext || window.webkitAudioContext)();
+  const unlock = () => (ctx.state === 'suspended' ? ctx.resume() : undefined);
+  const beep = (f=880,d=0.18,v=0.06,delay=0) => { unlock(); const o=new OscillatorNode(ctx,{type:'sine',frequency:f}); const g=new GainNode(ctx,{gain:0}); o.connect(g).connect(ctx.destination); const t=ctx.currentTime+delay; g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(v,t+0.01); g.gain.exponentialRampToValueAtTime(0.0001,t+d); o.start(t); o.stop(t+d); };
+  const startBeep = () => beep(660,0.12,0.05);
+  const doneBeep  = () => { beep(880,0.14,0.06); beep(1175,0.16,0.06,0.18); };
+
+  const q = (sel,root=document) => root.querySelector(sel);
+  const getLastAssistant = () => { const n=document.querySelectorAll('[data-message-author-role="assistant"]'); return n.length?n[n.length-1]:null; };
+  const stopUIPresent = () => !!q('button[aria-label="Stop generating"],[data-testid="stop-button"]');
+
+  const state = { node: null, lastLen: 0, lastChange: 0, active: false };
+
+  const lenOf = (el) => (el?.innerText || '').length;
+  const now = () => Date.now();
+
+  const resetForNode = (el) => {
+    state.node = el;
+    state.lastLen = lenOf(el);
+    state.lastChange = now();
+    state.active = false;
+  };
+
+  const tick = () => {
+    const el = getLastAssistant();
+    if (!el) return;
+
+    if (el !== state.node) resetForNode(el);
+
+    const len = lenOf(el);
+    const grew = len > state.lastLen;
+
+    if (grew && !state.active) {
+      state.active = true;
+      startBeep();
+    }
+
+    if (grew) state.lastChange = now();
+
+    const idleMs = now() - state.lastChange;
+    if (state.active && idleMs > 900 && !stopUIPresent()) {
+      state.active = false;
+      doneBeep();
+    }
+
+    state.lastLen = len;
+  };
+
+  const mo = new MutationObserver(() => tick());
+  mo.observe(document.body, { childList: true, subtree: true, characterData: true, attributes: true });
+
+  const iv = setInterval(tick, 150);
+
+  window.stopChatGPTBeep = () => { mo.disconnect(); clearInterval(iv); };
+  console.log('start+done beeps (text-activity detector) enabled; call stopChatGPTBeep() to stop');
+})();
